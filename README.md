@@ -1,127 +1,164 @@
-# 6-Transistor SRAM
+# 6T SRAM Cell Design using Cadence Virtuoso
 
-A repository dedicated to the design, simulation, and implementation of 6-Transistor Static Random-Access Memory (6T-SRAM) cells and arrays.
+## Project Overview
 
-## Overview
+This project presents the design and analysis of a 6T SRAM (Static Random Access Memory) Cell using Cadence Virtuoso. The complete design flow includes schematic creation, simulation, layout verification, parasitic extraction, and performance evaluation.
 
-This project focuses on the development and optimization of 6-transistor SRAM (6T-SRAM), a fundamental building block in modern digital memory systems. The 6T-SRAM cell is one of the most widely used memory cell architectures in microprocessor caches and embedded memory applications due to its excellent trade-offs between density, speed, and power consumption.
+The project focuses on:
 
-## Features
-
-- **Core 6T-SRAM Cell Design**: Standard 6-transistor cell configuration with two cross-coupled inverters and access transistors
-- **Memory Array Architecture**: Multi-bit word organization with row/column selection circuitry
-- **Read/Write Operations**: Complete control logic for memory access operations
-- **Simulation & Verification**: Comprehensive testing and validation of memory functionality
-- **Performance Analysis**: Timing, power consumption, and noise margin characterization
-
-## What is 6T-SRAM?
-
-The 6-transistor SRAM cell consists of:
-- **2 Cross-coupled inverters** (4 transistors) - store the bit value
-- **2 Access transistors** (2 transistors) - control read/write operations
-
-### Key Characteristics:
-- **Static**: Retains data as long as power is supplied
-- **Volatile**: Data is lost when power is removed
-- **Fast Access**: Sub-nanosecond read/write times
-- **Low Power**: Minimal leakage and dynamic power consumption
-- **Scalable**: Can be easily integrated into large memory arrays
-
-## Applications
-
-- CPU L1/L2/L3 Cache Memory
-- GPU Register Files
-- Embedded Microcontroller Memory
-- Mobile Device RAM
-- High-Speed Buffer Memory
-
-## Getting Started
-
-### Prerequisites
-- SPICE simulator (ngspice, Cadence Spectre, or equivalent)
-- Verilog/VHDL simulator (optional, for higher-level modeling)
-- Digital design tools and CAD software
-
-### Basic Usage
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/HEMANTH23167/6-Transistor-SRAM.git
-   cd 6-Transistor-SRAM
-   ```
-
-2. **Review the design files** - Navigate through the project structure to understand the cell design and architecture
-
-3. **Run simulations** - Execute simulation scripts to verify functionality
-
-## Project Structure
-
-```
-6-Transistor-SRAM/
-├── README.md
-├── designs/              # SRAM cell and array designs
-├── simulations/          # Simulation files and test benches
-├── verification/         # Test cases and verification scripts
-├── documentation/        # Technical documentation and specifications
-└── results/             # Simulation results and analysis
-```
-
-## Design Considerations
-
-### Read Operation
-- Bit lines are precharged to VDD
-- Word line is asserted
-- Storage nodes discharge through access transistors
-- Sense amplifier detects the voltage difference
-
-### Write Operation
-- Bit lines are driven to desired levels
-- Word line is asserted
-- Strong drive from bit lines forces cell to desired state
-
-### Key Metrics
-- **Access Time**: Time from word line assertion to data valid
-- **Cycle Time**: Minimum time between successive operations
-- **Power Consumption**: Static and dynamic power
-- **Noise Margins**: Robustness to environmental variations
-- **Cell Area**: Layout density
-
-## Features & Optimizations
-
-- Standard 6T configuration for proven reliability
-- Optimized transistor sizing for balanced performance
-- Read stability and write ability analysis
-- Temperature and supply voltage variations
-- Process variation tolerance
-
-## Contributing
-
-Contributions are welcome! Please feel free to:
-- Report issues and bugs
-- Suggest improvements and optimizations
-- Submit design enhancements
-- Improve documentation
-
-## References
-
-- Weste, N. H. E., & Harris, D. M. (2010). *CMOS VLSI Design: A Circuits and Systems Perspective* (4th ed.)
-- Rabaey, J. M., Chandrakasan, A., & Nicolic, B. (2003). *Digital Integrated Circuits* (2nd ed.)
-- International Roadmap for Devices and Systems (IRDS)
-- IEEE Standards for Microelectronic Design and Manufacturing
-
-## License
-
-This project is open source and available under the MIT License. See LICENSE file for details.
-
-## Author
-
-**HEMANTH23167**
-
-## Support & Contact
-
-For questions, issues, or collaborations, please open an issue on the GitHub repository or contact the project maintainer.
+* SRAM cell functionality
+* Read and write stability
+* Power and delay analysis
+* Physical verification using industry-standard EDA tools
 
 ---
 
-**Last Updated**: May 17, 2026
+# Tools & Technologies
 
+* Cadence Virtuoso
+* Cadence Spectre
+* Cadence Assura / Calibre
+* Cadence Quantus
+* Technology Node: 45nm
+
+---
+
+# 6T SRAM Architecture
+
+The SRAM cell consists of:
+
+* 2 PMOS transistors
+* 4 NMOS transistors
+
+  * Two cross-coupled CMOS inverters
+  * Two access transistors controlled by the Word Line (WL)
+
+The design stores one bit of data using bistable latch operation.
+
+---
+
+# SRAM Operations
+
+## Hold Mode
+
+* WL = 0
+* Access transistors remain OFF
+* Stored data is retained through cross-coupled inverters
+
+## Write Operation
+
+1. WL is enabled
+2. Data applied on BL and BL̅
+3. Internal nodes switch according to input data
+4. WL disabled after successful write
+
+Example:
+
+* BL = 1, BL̅ = 0 → Stores logic ‘1’
+* BL = 0, BL̅ = 1 → Stores logic ‘0’
+
+## Read Operation
+
+1. BL and BL̅ are precharged
+2. WL enabled
+3. Stored node discharges corresponding bitline
+4. Sense amplifier detects voltage difference
+
+---
+
+# Design Flow
+
+## 1. Schematic Design
+
+* Designed the SRAM cell using Virtuoso Schematic Editor
+* Implemented transistor-level connectivity
+
+## 2. Simulation & Testbench
+
+* Created testbench for Read/Write verification
+* Performed transient analysis using Spectre
+
+## 3. Layout Design
+
+* Custom layout designed following 45nm design rules
+* Optimized transistor placement and routing
+
+## 4. DRC Verification
+
+* Verified layout against fabrication design rules
+
+## 5. LVS Verification
+
+* Confirmed layout matches schematic connectivity
+
+## 6. RC Extraction
+
+* Extracted parasitic resistance and capacitance
+* Evaluated impact on timing and power
+
+## 7. Performance Analysis
+
+Analyzed:
+
+* Read Delay
+* Write Delay
+* Power Consumption
+* Stability Margins
+
+---
+
+# Repository Structure
+
+```bash
+📦 6T-SRAM-Cell
+├── schematic/        # SRAM schematic design
+├── layout/           # Layout files
+├── testbench/        # Simulation testbench
+├── drc_lvs/          # DRC & LVS reports
+├── extraction/       # RC extraction data
+├── analysis/         # Timing and power analysis
+├── results/          # Output waveforms/screenshots
+└── README.md
+```
+
+---
+
+# Simulation Procedure
+
+1. Open Cadence Virtuoso
+2. Load SRAM schematic/layout
+3. Open testbench setup
+4. Apply Read/Write stimulus
+5. Run Spectre transient analysis
+6. Perform DRC and LVS checks
+7. Run RC extraction and analyze results
+
+---
+
+# Key Features
+
+* Full Custom 6T SRAM Design
+* DRC/LVS Clean Layout
+* RC Extracted Analysis
+* Low-Power Optimization
+* Read/Write Stability Verification
+
+---
+
+# Future Enhancements
+
+* Multi-Port SRAM Architecture
+* Advanced Low-Power Techniques
+* Bitline Optimization
+* Sense Amplifier Integration
+* FinFET-Based SRAM Design
+
+---
+
+# Author
+
+HEMANTH B R
+
+Email: [hemanthhrh23167@gmail.com](mailto:hemanthhrh23167@gmail.com)
+GitHub: github.com/HEMANTH23167
+LinkedIn: linkedin.com/in/hemanthbr23167/
